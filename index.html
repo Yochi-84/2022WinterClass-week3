@@ -5,15 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>登入</title>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css' integrity='sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==' crossorigin='anonymous'/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js' integrity='sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg==' crossorigin='anonymous'></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+      integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
-        background-image: url("https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80");
+        background-image: url('https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -22,7 +28,7 @@
 
       @media screen and (min-width: 800px) {
         body {
-          background-image: url("https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+          background-image: url('https://images.unsplash.com/photo-1583083527882-4bee9aba2eea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=777&q=80');
         }
       }
     </style>
@@ -32,44 +38,67 @@
       <div class="row justify-content-center align-items-center h-100">
         <div id="app" class="col-md-8 col-lg-6">
           <form action="" class="p-4">
-            <legend class="text-center fw-bold display-4">登入</legend>
-            <label for="username" class="form-label mb-2 fs-5">信箱:</label>
-            <input type="email" id="username" class="form-control mb-4" v-model="username">
-            <label for="password" class="form-label mb-2 fs-5">密碼:</label>
-            <input type="password" id="password" class="form-control mb-5" v-model="password">
-            <button type="button" class="btn btn-primary btn-lg w-100" @click="checkUserInfo">登入</button>
+            <legend class="fw-bold display-4 text-center">登入</legend>
+            <label for="username" class="form-label fs-5 mb-2">信箱:</label>
+            <input
+              type="email"
+              id="username"
+              class="form-control mb-4"
+              v-model="username"
+            />
+            <label for="password" class="form-label fs-5 mb-2">密碼:</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control mb-5"
+              v-model="password"
+            />
+            <button
+              type="button"
+              class="btn btn-primary btn-lg w-100"
+              @click="checkUserInfo"
+            >
+              登入
+            </button>
           </form>
         </div>
       </div>
     </div>
   </body>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"
+    integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg=="
+    crossorigin="anonymous"
+  ></script>
   <script>
     const { createApp } = Vue;
-    const baseUrl = 'https://vue3-course-api.hexschool.io';
+    axios.defaults.baseURL = 'https://vue3-course-api.hexschool.io';
+
     const app = {
       data() {
         return {
           status: false,
-          username: "",
-          password: ""
+          username: '',
+          password: '',
         };
       },
       methods: {
         checkUserInfo() {
-          axios.post(`${baseUrl}/v2/admin/signin`,
-          {
-            username: this.username,
-            password: this.password
-          })
-          .then(res => {
-            axios.defaults.headers.common['Authorization'] = res.data.token;
-            document.cookie = `token = ${res.data.token}`;
-            this.status = true;
-            window.location.href = "./backend.html";
-          })
-          .catch(err => console.error(err))
-        }
-      }
+          axios
+            .post(`/v2/admin/signin`, {
+              username: this.username,
+              password: this.password,
+            })
+            .then((res) => {
+              axios.defaults.headers.common['Authorization'] = res.data.token;
+              document.cookie = `token = ${res.data.token}`;
+              this.status = true;
+              window.location.href = './backend.html';
+            })
+            .catch((err) => console.error(err));
+        },
+      },
     };
 
     createApp(app).mount('#app');
